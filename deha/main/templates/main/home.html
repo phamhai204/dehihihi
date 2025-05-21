@@ -1,0 +1,31 @@
+<!-- filepath: main/templates/main/home.html -->
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Home - barber123 {% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Our Services</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for service in services %}
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0" style="transition: transform 0.2s;">
+      {% if service.image %}
+      <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}" style="height:220px;object-fit:cover;">
+  
+      {% else %}
+      <img src="{% static 'main/default_service.jpg' %}" class="card-img-top" alt="No image" style="height:220px;object-fit:cover;">
+      {% endif %}
+      <div class="card-body text-center">
+        <h5 class="card-title">{{ service.name }}</h5>
+        <p class="card-text">{{ service.description }}</p>
+      </div>
+      <div class="card-footer bg-white border-0 text-center">
+        <span class="fw-bold text-primary">Price: ${{ service.price }}</span>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>No services available at the moment.</p>
+  {% endfor %}
+</div>
+{% endblock %}

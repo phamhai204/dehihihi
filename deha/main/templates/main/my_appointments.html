@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">My Appointments</h2>
+  {% if appointments %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Date & Time</th>
+          <th>Price</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app in appointments %}
+        <tr>
+          <td>{{ app.service.name }}</td>
+          <td>{{ app.appointment_date|date:"d/m/Y H:i" }}</td>
+          <td>{{ app.service.price|floatformat:0 }} VNĐ</td>
+          <td>{{ app.notes }}</td>
+          <td>
+            <form action="{% url 'delete_appointment' app.pk %}" method="post" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+            </form>
+            <a href="{% url 'edit_appointment' app.pk %}" class="btn btn-warning btn-sm">Edit</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No appointments yet.</p>
+  {% endif %}
+  <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Quay về trang chủ</a>
+</div>
+{% endblock %}

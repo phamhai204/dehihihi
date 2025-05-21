@@ -1,0 +1,20 @@
+<!-- filepath: c:\Users\Admin\Desktop\barber_site\main\templates\main\barbers.html -->
+{% extends 'main/base.html' %}
+{% block title %}Đội ngũ thợ cắt tóc{% endblock %}
+{% block content %}
+<h2 class="mb-4 text-center">Đội ngũ thợ cắt tóc</h2>
+<div class="row">
+  {% for barber in barbers %}
+  <div class="col-md-4">
+    <div class="card mb-3">
+      <img src="{{ barber.photo.url }}" class="card-img-top" alt="{{ barber.name }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ barber.name }}</h5>
+        <p class="card-text">{{ barber.experience }}</p>
+        <p class="card-text"><small>Lịch làm việc: {{ barber.schedule }}</small></p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

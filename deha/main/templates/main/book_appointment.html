@@ -1,0 +1,44 @@
+<!-- filepath: main/templates/main/book_appointment.html -->
+{% extends 'main/base.html' %}
+{% block title %}Book Appointment{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Đặt lịch</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="mb-3">
+      <label class="form-label">Chọn thợ cắt tóc</label>
+      <div class="row">
+        {% for barber in barbers %}
+        <div class="col-4 text-center mb-3">
+          <label style="cursor:pointer;">
+            <input type="radio" name="barber" value="{{ barber.id }}"
+              {% if form.data.barber == barber.id|stringformat:"s" %}checked{% endif %}>
+            <img src="{{ barber.photo.url }}" alt="{{ barber.name }}" style="width:80px;height:80px;border-radius:50%;display:block;margin:auto;">
+            <div>{{ barber.name }}</div>
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+      {{ form.barber.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="id_service" class="form-label">Dịch vụ</label>
+      {{ form.service }}
+      {{ form.service.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="id_appointment_date" class="form-label">Ngày & giờ</label>
+      {{ form.appointment_date }}
+      {{ form.appointment_date.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="id_notes" class="form-label">Ghi chú</label>
+      {{ form.notes }}
+      {{ form.notes.errors }}
+    </div>
+    <button type="submit" class="btn btn-primary">Đặt lịch</button>
+  </form>
+</div>
+{% endblock %}
